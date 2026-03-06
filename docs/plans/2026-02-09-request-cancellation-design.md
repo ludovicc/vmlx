@@ -219,7 +219,7 @@ async def create_chat_completion(
 
 ### 4. Engine Changes
 
-**File**: `vllm_mlx/engine/base.py`
+**File**: `vmlx_engine/engine/base.py`
 
 ```python
 async def stream_chat(
@@ -244,7 +244,7 @@ async def stream_chat(
     """
 ```
 
-**File**: `vllm_mlx/engine/batched.py` (line ~510, ~587)
+**File**: `vmlx_engine/engine/batched.py` (line ~510, ~587)
 
 ```python
 # In generate() method
@@ -264,7 +264,7 @@ request_id = await self._engine.add_request(
 )
 ```
 
-**File**: `vllm_mlx/engine/simple.py` (similar changes)
+**File**: `vmlx_engine/engine/simple.py` (similar changes)
 
 **Note**: `engine_core.py` already supports `request_id` parameter (line 191), no changes needed!
 
@@ -621,7 +621,7 @@ async def test_connection_closed():
 ### Manual Testing
 
 **Test with vMLX Panel**:
-1. Start vMLX server: `vllm-mlx serve model --continuous-batching`
+1. Start vMLX server: `vmlx-engine serve model --continuous-batching`
 2. Open vMLX panel in browser
 3. Send a long request (e.g., "Write a 10 paragraph essay")
 4. Click stop button mid-generation
@@ -639,20 +639,20 @@ async def test_connection_closed():
 
 ### Core Implementation
 
-1. **vllm_mlx/server.py** (~50 lines changed)
+1. **vmlx_engine/server.py** (~50 lines changed)
    - Add cancel endpoints (chat & completions)
    - Modify `stream_chat_completion()` to accept and pass `request_id`
    - Add connection detection logic
    - Add `fastapi_request: Request` parameter
 
-2. **vllm_mlx/engine/base.py** (~5 lines)
+2. **vmlx_engine/engine/base.py** (~5 lines)
    - Add `request_id: Optional[str] = None` parameter to `stream_chat()` signature
 
-3. **vllm_mlx/engine/batched.py** (~10 lines)
+3. **vmlx_engine/engine/batched.py** (~10 lines)
    - Pass `request_id` to `engine.add_request()` in `generate()` method
    - Pass `request_id` to `engine.add_request()` in `stream_chat()` method
 
-4. **vllm_mlx/engine/simple.py** (~10 lines)
+4. **vmlx_engine/engine/simple.py** (~10 lines)
    - Same changes as batched.py
 
 ### Documentation
@@ -724,6 +724,6 @@ async def test_connection_closed():
 ## References
 
 - exploit.bot cancel implementation: `/var/www/chat/routes/chat.js` line 743-754
-- vMLX abort_request: `vllm_mlx/scheduler.py` line 726-759
+- vMLX abort_request: `vmlx_engine/scheduler.py` line 726-759
 - FastAPI disconnection detection: `request.is_disconnected()`
 - OpenAI API streaming: https://platform.openai.com/docs/api-reference/streaming
