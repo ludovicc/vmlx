@@ -253,18 +253,18 @@ Run: `python tests/integration/test_server_endpoints.py --model <small-model> --
 
 ## 10. Homebrew Cask
 
-Public repo `vmlxllm/homebrew-vmlx` with cask pointing to DMG:
+Public repo `jjang-ai/homebrew-vmlx` with cask pointing to DMG:
 
 ```ruby
 cask "vmlx" do
   version "1.2.2"
   sha256 "<sha256>"
-  url "https://github.com/vmlxllm/vmlx-releases/releases/download/v#{version}/vMLX-#{version}-arm64.dmg"
+  url "https://github.com/jjang-ai/mlxstudio/releases/download/v#{version}/vMLX-#{version}-arm64.dmg"
   app "vMLX.app"
 end
 ```
 
-Install: `brew tap vmlxllm/vmlx && brew install --cask vmlx`
+Install: `brew tap jjang-ai/vmlx && brew install --cask vmlx`
 
 ---
 
@@ -293,7 +293,7 @@ Install: `brew tap vmlxllm/vmlx && brew install --cask vmlx`
 - `panel/src/renderer/src/components/settings/` — TraySettings, ModelSettings panels
 
 ### New Repo
-- `vmlxllm/homebrew-vmlx` — Homebrew cask formula
+- `jjang-ai/homebrew-vmlx` — Homebrew cask formula
 
 ### Estimated Total
 - ~2,100 lines new code
