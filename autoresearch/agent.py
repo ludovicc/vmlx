@@ -213,7 +213,7 @@ class VmlxAgent:
             # Get response from model
             output = await self.engine.chat(
                 messages=messages,
-                max_tokens=512,
+                max_tokens=1024,
                 temperature=self.temperature,
                 tools=TOOL_DEFINITIONS,
             )
